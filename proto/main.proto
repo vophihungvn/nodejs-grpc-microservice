@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package todo;
+
+service TodoService {
+    rpc addTodo (AddTodoRequest) returns (Todo);
+    rpc listTodo (ListTodoRequest) returns (TodoListResponse);
+}
+
+service AuthenticateService {
+    rpc login(User) returns (UserResponse);
+}
+
+service EmailService {
+    rpc sendEmail (User) returns (UserResponse);
+}
+
+message NullRequest {  
+}
+
+// Todo model
+message Todo {
+    string user = 1;
+    string description = 2;
+    string status = 3;
+    int64 dateCreated = 4;
+    int64 dateUpdated = 5;
+    string _id = 6;
+    int32 __v = 7;
+}
+
+message AddTodoRequest {
+    string user = 1;
+    string description = 2;
+}
+
+message ListTodoRequest {
+    string user = 1;
+}
+
+message TodoListResponse {
+    repeated Todo todos = 1;
+}
+
+// User model
+message User {
+    string email = 1;
+}
+
+message UserResponse {
+    string _id = 1;
+    string email = 2;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "authenticate-service",
+  "version": "1.0.0",
+  "description": "Authenticate Service - a part of  gRPC NodeJS microservice project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm test"
+  },
+  "author": "Phi-Hung Vo",
+  "license": "MIT",
+  "dependencies": {
+    "grpc": "^1.7.2",
+    "mongoose": "^4.13.5"
+  }
+}
