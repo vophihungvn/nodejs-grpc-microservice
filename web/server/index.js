@@ -16,7 +16,7 @@ app
     .use(routers)
 
 
-const PORT = process.env.NODE_PORT || 3000
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
     console.log(`NodeJS server listen on ${PORT}`)
 })

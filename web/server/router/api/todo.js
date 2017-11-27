@@ -1,7 +1,7 @@
 import {
   Router
 } from 'express'
-import Base from '../Base'
+import Base from '../base'
 import {
   todoService
 } from '../../services'

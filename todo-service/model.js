@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose
-const MONGO_HOST = process.env.MONGO_HOST || 'mongodb://localhost/todo'
-mongoose.connect(MONGO_HOST, {
+const MONGO_HOST = process.env.MONGO_HOST || 'localhost'
+mongoose.connect(`mongodb://${MONGO_HOST}/todo`, {
     useMongoClient: true
 })
 
+const { Schema } = mongoose
 mongoose.Promise = Promise
 
 module.exports = mongoose.model('todo', {

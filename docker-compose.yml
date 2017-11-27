@@ -27,7 +27,42 @@ services:
       - "PORT=3000"
     ports:
       - "3002:3000"
-      
+
+  todo:
+    build:
+      context: .
+      dockerfile: todo-service/Dockerfile
+    container_name: todo-service
+    environment:
+      - "MONGO_HOST=db"
+      - "EmailHost=email:3000"
+      - "PORT=3000"
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "3003:3000"
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    container_name: todo-web
+    environment:
+      - "AuthenticateHost=authenticate-service:3000"
+      - "TodoHost=todo:3000"
+      - "EmailHost=email:3000"
+      - "PORT=3000"
+    depends_on:
+      - authenticate-service
+      - todo
+    links:
+      - authenticate-service
+      - todo
+    ports:
+      - "3000:3000"
+   
   db:
     image: mongo:3.3
     container_name: todo-db

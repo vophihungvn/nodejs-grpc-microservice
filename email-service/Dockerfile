@@ -8,6 +8,6 @@ ADD email-service ${SERVICE_PATH}/email-service
 WORKDIR ${SERVICE_PATH}/email-service
 
 RUN npm i
-RUN node index.js
+ENTRYPOINT [ "node", "index.js" ]
 
 EXPOSE 3000

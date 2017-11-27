@@ -1,4 +1,4 @@
-import Base from '../Base'
+import Base from '../base'
 import { Router } from 'express'
 import { authenticateService } from '../../services'
 
