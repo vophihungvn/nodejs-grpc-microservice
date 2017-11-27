@@ -1,10 +1,13 @@
 FROM node:latest
 
-WORKDIR /usr/src/todo-service
+ENV SERVICE_PATH /usr/src/todo-service
 
+ADD proto ${SERVICE_PATH}/proto
+ADD email-service ${SERVICE_PATH}/email-service
 
-RUN npm i && npm run build
+WORKDIR ${SERVICE_PATH}/email-service
 
-RUN node dist
+RUN npm i
+RUN node index.js
 
-EXPOSE 8080
+EXPOSE 3000

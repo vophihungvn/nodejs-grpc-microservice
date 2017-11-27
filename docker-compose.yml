@@ -1,0 +1,35 @@
+version: '3'
+services:
+  authenticate-service:
+    build:
+      context: .
+      dockerfile: authenticate-service/Dockerfile
+    container_name: todo-authenticate-service
+    environment:
+      - "MONGO_HOST=db"
+      - "EmailHost=email:3000"
+      - "PORT=3000"
+    depends_on:
+      - email
+      - db
+    links:
+      - email
+      - db
+    ports:
+      - "3001:3000"
+  
+  email:
+    build:
+      context: .
+      dockerfile: email-service/Dockerfile
+    container_name: todo-email-service
+    environment:
+      - "PORT=3000"
+    ports:
+      - "3002:3000"
+      
+  db:
+    image: mongo:3.3
+    container_name: todo-db
+    logging:
+      driver: none

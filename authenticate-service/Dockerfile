@@ -1,10 +1,13 @@
 FROM node:latest
 
-WORKDIR /usr/src/todo-service
+ENV SERVICE_PATH /usr/src/todo-service
 
+ADD proto ${SERVICE_PATH}/proto
+ADD authenticate-service ${SERVICE_PATH}/authenticate-service
 
-RUN npm i && npm run build
+WORKDIR ${SERVICE_PATH}/authenticate-service
 
-RUN node dist
+RUN npm i
+RUN node index.js
 
-EXPOSE 8080
+EXPOSE 3000
