@@ -8,13 +8,13 @@ import About from '../about'
 const App = () => (
   <div>
     <AppBar position="static" style={{ height: 40}}>
-      <Link to="/"><Typography type="title" color="white" style={{ flex: 1 }}>
+      { /*<Link to="/"><Typography type="title" color="white" style={{ flex: 1 }}>
         Title
       </Typography></Link>
       <Link to="/about-us"><Typography type="title" color="inherit" style={{ flex: 1 }}>
         Title
       </Typography></Link>
-      
+      */}
     </AppBar>
     <main>
       <Route exact path="/" component={Home} />
