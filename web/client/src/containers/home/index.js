@@ -80,7 +80,7 @@ class Home extends React.Component {
               <TableBody>
                 {tasks.map(task => {
                   return (
-                  <TableRow >
+                  <TableRow key={task._id}>
                     <TableCell>{task._id}</TableCell>
                     <TableCell>{task.description}</TableCell>
                     <TableCell>{task.status}</TableCell>

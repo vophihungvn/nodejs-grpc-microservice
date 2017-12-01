@@ -19,16 +19,14 @@ export default (state = initialState, action) => {
     }
 
     case ADD_TASK: {
-      action.task.id = state.currentIdx
-      state.currentIdx ++
       state.tasks.push(action.task)
       return state
     }
 
     case CHANGE_TASK_STATUS: {
-      const { id } = action
+      const { _id } = action
       state.tasks = state.tasks.map(task => {
-        if ( task.id === id ) {
+        if ( task._id === _id ) {
           task.status = 'DONE'
         }
         return task
@@ -69,13 +67,10 @@ export const addTask = ({ description, userId }) => {
       user: userId,
       description
     }).then((response) => {
-      console.log(response)
+      const task = response.results.object
       dispatch({
         type: ADD_TASK,
-        task: {
-          description,
-          status: 'TO-DO'
-        }
+        task
       })
     })
   }

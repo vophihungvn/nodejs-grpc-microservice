@@ -20,7 +20,6 @@ const addTodo = (call, callback) => {
     todo
       .save((todoItem) => {
         const obj = JSON.parse(JSON.stringify(todo.toObject()))
-        console.log(obj)
         callback(null, obj)
       })
       .catch(callback)  

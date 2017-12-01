@@ -33,6 +33,6 @@ export default class TodoRoute extends Base {
       user,
       description
     })
-    this.onSuccessAsList(res, todos)
+    this.onSuccess(res, todos)
   }
 }

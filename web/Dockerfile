@@ -3,7 +3,7 @@ FROM node:latest
 ENV SERVICE_PATH /usr/src/todo-service
 
 ADD proto ${SERVICE_PATH}/proto
-ADD web/client ${SERVICE_PATH}/web/client
+ADD web/client ${SERVICE_PATH}/web/server/client
 ADD web/server ${SERVICE_PATH}/web/server
 
 WORKDIR ${SERVICE_PATH}/web/server
@@ -13,7 +13,9 @@ WORKDIR ${SERVICE_PATH}/web/server
 RUN npm i -g babel-cli
 RUN npm i
 
-# RUN ./node_modules/.bin/babel app --out-dir dist
+# RUN babel app --out-dir dist
+
+RUN cd client && npm i && npm run build
 
 ENTRYPOINT [ "babel-node", "index.js" ]
 
