@@ -32,9 +32,9 @@ export const login = ({ email }) => {
     return post('api/user/login', { email })
     .then(res => {
       const {_id} = res.results.object
-      setStorage(USER_ID_KEY, _id),
+      setStorage(USER_ID_KEY, _id)
       setStorage(USER_EMAIL_KEY, email)
-      
+
       dispatch({
         type: USER_LOGIN,
         userEmail: email,

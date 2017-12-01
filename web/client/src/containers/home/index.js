@@ -14,7 +14,8 @@ import Login from './login'
 import {
   addTask,
   changeTaskStatus,
-  deleteTask
+  deleteTask,
+  getTasks
 } from '../../modules/todo'
 
 class Home extends React.Component {
@@ -30,10 +31,18 @@ class Home extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if(this.props.isLogin) {
+      this.props.getTasks(this.props.userId)
+    }
+  }
+
   addTask = () => {
     const { description } = this.state
+    const { userId } = this.props
     this.props.addTask({
-      description
+      description,
+      userId
     })
   }
 
@@ -72,13 +81,13 @@ class Home extends React.Component {
                 {tasks.map(task => {
                   return (
                   <TableRow >
-                    <TableCell>{task.id}</TableCell>
+                    <TableCell>{task._id}</TableCell>
                     <TableCell>{task.description}</TableCell>
                     <TableCell>{task.status}</TableCell>
                     <TableCell numeric >
                       <IconButton onClick={e => {
                         props.changeTaskStatus(task.id)
-                      }} style={{ display: (task.status === 'TO-DO')? 'inline': 'none' }}>
+                      }} style={{ display: (task.status === 'TODO')? 'inline': 'none' }}>
                         <Done />
                       </IconButton>
                       <IconButton  onClick={e => {
@@ -102,13 +111,16 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   tasks: state.todo.tasks,
+  isLogin: state.user.isLogin,
+  userId: state.user.userId
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   // changePage: () => push('/about-us'),
   addTask,
   changeTaskStatus,
-  deleteTask
+  deleteTask,
+  getTasks
 }, dispatch)
 
 export default connect(

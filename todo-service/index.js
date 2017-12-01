@@ -40,6 +40,7 @@ const listTodo = (call, callback) => {
       user
     })
     .then(todos => {
+      todos = todos.map(todo => JSON.parse(JSON.stringify(todo.toObject())))
       callback(null, todos)
     })
     .catch(callback)

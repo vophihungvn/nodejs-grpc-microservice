@@ -1,7 +1,9 @@
+import { post, get } from '../utils'
+
+export const GET_TASK = 'task/GET'
 export const ADD_TASK = 'task/ADD'
 export const CHANGE_TASK_STATUS = 'task/STATUS'
 export const DELETE_TASK = 'task/DELETE'
-
 const initialState = {
   tasks: [],
   currentIdx: 0
@@ -9,6 +11,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case GET_TASK: {
+      return {
+        ...state,
+        tasks: action.tasks
+      }
+    }
+
     case ADD_TASK: {
       action.task.id = state.currentIdx
       state.currentIdx ++
@@ -42,14 +51,32 @@ export default (state = initialState, action) => {
   }
 }
 
-export const addTask = ({ description }) => {
+export const getTasks = (userId) => {
   return dispatch => {
-    dispatch({
-      type: ADD_TASK,
-      task: {
-        description,
-        status: 'TO-DO'
-      }
+    get(`api/todo/${userId}`)
+    .then(response => {
+      dispatch({
+        type: GET_TASK,
+        tasks: response.results.objects.todos
+      })  
+    })
+  }
+}
+
+export const addTask = ({ description, userId }) => {
+  return dispatch => {
+    post('api/todo', {
+      user: userId,
+      description
+    }).then((response) => {
+      console.log(response)
+      dispatch({
+        type: ADD_TASK,
+        task: {
+          description,
+          status: 'TO-DO'
+        }
+      })
     })
   }
 }

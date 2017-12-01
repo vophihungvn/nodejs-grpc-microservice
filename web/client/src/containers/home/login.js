@@ -1,5 +1,4 @@
 import React from 'react'
-import Card, { CardContent } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import Dialog, {
   DialogActions,
@@ -30,7 +29,6 @@ class EmailDialog extends React.Component {
   }
 
   render() {
-    const props = this.prop
     return (
       <div>
        <Dialog open={this.props.open} onRequestClose={this.handleRequestClose}>
