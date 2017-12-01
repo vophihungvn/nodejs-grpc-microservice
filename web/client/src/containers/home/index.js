@@ -1,25 +1,20 @@
 import React from 'react'
-import InboxIcon from 'material-ui-icons/Inbox'
-import DraftsIcon from 'material-ui-icons/Drafts'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import Done from 'material-ui-icons/Done'
 import Delete from 'material-ui-icons/Delete'
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import Button from 'material-ui/Button'
-import { push } from 'react-router-redux'
+// import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Login from './login'
 
 import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync
-} from '../../modules/counter'
-import {
-  addTask
+  addTask,
+  changeTaskStatus,
+  deleteTask
 } from '../../modules/todo'
 
 class Home extends React.Component {
@@ -45,10 +40,8 @@ class Home extends React.Component {
   render() {
     const props = this.props
     const { tasks = [] } = props
-    console.log(tasks)
     return (
       <div>
-        <p>Count: {props.count}</p>
         <div style={{maginLeft: 40}}>
           <h1>Todos</h1>
         </div>
@@ -69,6 +62,7 @@ class Home extends React.Component {
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>Id</TableCell>
                   <TableCell>Task</TableCell>
                   <TableCell >Status</TableCell>
                   <TableCell numeric>Action</TableCell>
@@ -78,13 +72,18 @@ class Home extends React.Component {
                 {tasks.map(task => {
                   return (
                   <TableRow >
+                    <TableCell>{task.id}</TableCell>
                     <TableCell>{task.description}</TableCell>
                     <TableCell>{task.status}</TableCell>
                     <TableCell numeric >
-                      <IconButton>
+                      <IconButton onClick={e => {
+                        props.changeTaskStatus(task.id)
+                      }} style={{ display: (task.status === 'TO-DO')? 'inline': 'none' }}>
                         <Done />
                       </IconButton>
-                      <IconButton>
+                      <IconButton  onClick={e => {
+                        props.deleteTask(task.id)
+                      }}>
                         <Delete />
                       </IconButton>
                     </TableCell>
@@ -94,19 +93,7 @@ class Home extends React.Component {
             </Table>
           </CardContent>
         </Card>
-    
-        <p>
-          <button onClick={props.increment} disabled={props.isIncrementing}>Increment</button>
-          <button onClick={props.incrementAsync} disabled={props.isIncrementing}>Increment Async</button>
-        </p>
-    
-        <p>
-          <button onClick={props.decrement} disabled={props.isDecrementing}>Decrement</button>
-          <button onClick={props.decrementAsync} disabled={props.isDecrementing}>Decrement Async</button>
-        </p>
-    
-        <p><button onClick={() => props.changePage()}>Go to about page via redux</button></p>        
-    
+        <Login />
       </div>
     )
   }
@@ -114,19 +101,14 @@ class Home extends React.Component {
 
 
 const mapStateToProps = state => ({
-  count: state.counter.count,
-  isIncrementing: state.counter.isIncrementing,
-  isDecrementing: state.counter.isDecrementing,
   tasks: state.todo.tasks,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync,
-  changePage: () => push('/about-us'),
-  addTask
+  // changePage: () => push('/about-us'),
+  addTask,
+  changeTaskStatus,
+  deleteTask
 }, dispatch)
 
 export default connect(
